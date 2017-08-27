@@ -49,7 +49,7 @@ def inference(images):
         bias = tf.nn.bias_add(conv, biases)
         conv3 = tf.nn.relu(bias, name=scope)
         parameters += [kernel, biases]
-    print_activations(conv3)
+        print_activations(conv3)
 
 
     with tf.name_scope('conv4') as scope:
@@ -59,7 +59,7 @@ def inference(images):
         bias = tf.nn.bias_add(conv, biases)
         conv4 = tf.nn.relu(bias, name=scope)
         parameters += [kernel, biases]
-    print_activations(conv4)
+        print_activations(conv4)
 
 
     with tf.name_scope('conv5') as scope:
@@ -69,7 +69,7 @@ def inference(images):
         bias = tf.nn.bias_add(conv, biases)
         conv5 = tf.nn.relu(bias, name=scope)
         parameters += [kernel, biases]
-    print_activations(conv5)
+        print_activations(conv5)
 
 
 
@@ -83,16 +83,15 @@ def time_tensorflow_run(session,target,info_string):
     total_duration_squared = 0.0
 
 
-    for i in range(num_steps_burn_in):
+    for i in range(num_batches + num_steps_burn_in):
         start_time = time.time()
         _ = session.run(target)
         duration = time.time() - start_time
-        if i> num_steps_burn_in:
+        if i>= num_steps_burn_in:
             if not i%10:
                 print('%s:step %d,duration = %.3f'%(datetime.now(),i - num_steps_burn_in,duration))
             total_duration += duration
             total_duration_squared += duration * duration
-
             mn = total_duration/num_batches
             vr = total_duration_squared / num_batches - mn * mn
             sd = math.sqrt(vr)
