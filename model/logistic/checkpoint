@@ -1,0 +1,2 @@
+model_checkpoint_path: "logistic.ckpt"
+all_model_checkpoint_paths: "logistic.ckpt"
